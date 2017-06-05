@@ -1,38 +1,49 @@
 package com.melhoridade.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.melhoridade.entities.Colaborador;
+import com.melhoridade.data.ColaboratorDao;
+import com.melhoridade.entities.Colaborator;
+import com.melhoridade.entities.Role;
+import com.melhoridade.entities.Role.Description;
 
 @Service
-public class ColaboradorService {
+public class ColaboradorService extends RoleService {
 
-	List<Colaborador> colaboradores = new ArrayList(Arrays.asList(
-			new Colaborador("id1","colaborador 1"),
-			new Colaborador("id2","colaborador 2"),
-			new Colaborador("id3","colaborador 3"),
-			new Colaborador("id4","colaborador 4")
-			));
+	@Autowired
+	private ColaboratorDao colaboratorDao;
 	
-	public List<Colaborador> getColaboradores() {
-		return colaboradores;
+	public List<Colaborator> getColaboradores() {
+		List<Colaborator> colaborators = new ArrayList<>();
+		colaboratorDao.findAll().forEach(colaborators::add);
+		return colaborators;
 	}
 	
-	public Colaborador getColaborador(String id) {
-		return colaboradores.stream()
-				.filter(c -> c.getId().equals(id))
-				.findFirst()
-				.get();
+	public Colaborator getColaborator(Long id) {
+		return colaboratorDao.findOne(id);
 	}
 	
-	public Colaborador agregarColaborador(Colaborador colaborador) {
-		colaborador.setId("id" + (colaboradores.size() + 1));
-		colaboradores.add(colaborador);
-		return colaborador;
+	public Colaborator agregarColaborador(Colaborator colaborator) {
+		Role role = roleDao.findByDescription(Description.COLABORATOR);
+		colaborator.setRole(role);
+		return colaboratorDao.save(colaborator);
+	}
+	
+	public void atualizarColaborador(Long id, Colaborator colaborator) {
+		if (id == null) {
+			// TODO thrown appropriate exception
+			throw new IllegalArgumentException("precisa-se de o id do colaborador");
+		}
+		colaborator.setId(id);
+		colaboratorDao.save(colaborator);
+	}
+	
+	public void excluirColaborador(Long id) {
+		colaboratorDao.delete(id);
 	}
 	
 }
