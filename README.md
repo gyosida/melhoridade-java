@@ -21,5 +21,7 @@ Melhoridade REST API uses the following libraries:
 ### Heads Up
 To get the app running you would need a couple of config files which are the application.properties and a little sql script with basic data to be loaded when starting up. Just ask for them.
  
-
+### Postman
+To get familiar with the published web services try this postman collection
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5f7b39404905ff760005)
  
