@@ -1,4 +1,4 @@
-:# Melhoridade REST API
+# Melhoridade REST API
  
 Melhoridade is a college project from the Projeto Integrado II course. It exposes a group of resources through a Java REST API. The idea behind it is to provide an easy to use web app for elderly people that look for activities offered by colaborators (establishments) according to their needs and preferences.
  
